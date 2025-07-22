@@ -62,6 +62,9 @@ RUN mkdir -p bootstrap/cache
 # Run composer scripts as superuser
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer dump-autoload --optimize --no-scripts
 
+# Run database migrations
+RUN php artisan migrate --force
+
 
 
 # Copy Nginx and Supervisor configurations
