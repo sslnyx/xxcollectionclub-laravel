@@ -55,8 +55,14 @@ RUN echo "APP_KEY=base64:dummy_key_for_build_process_12345=" > .env
 # Copy composer binary
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
+# Ensure cache directory exists and clear cache
+RUN mkdir -p bootstrap/cache && \
+    php artisan cache:clear && \
+    php artisan config:clear
+
 # Run composer scripts as superuser
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer dump-autoload --optimize
+
 
 # Copy Nginx and Supervisor configurations
 # These files will be created in the next step
