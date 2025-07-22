@@ -37,8 +37,8 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     gd \
     zip \
     pdo \
-    pdo_pgsql 
-    exif 
+    pdo_pgsql \
+    exif \
     pcntl
 
 # Copy application code and dependencies
