@@ -4,7 +4,7 @@ FROM composer:2 as composer
 WORKDIR /app
 COPY database/ database/
 COPY composer.json ./
-RUN composer install --no-dev --no-interaction --prefer-dist
+RUN composer install --no-dev --no-interaction --prefer-dist --ignore-platform-reqs
 
 
 # Stage 2: Frontend assets
