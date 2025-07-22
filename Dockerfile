@@ -10,10 +10,10 @@ RUN composer install --no-dev --no-interaction --no-plugins --no-scripts --prefe
 # Stage 2: Frontend assets
 FROM node:18 as node
 WORKDIR /app
-COPY package.json yarn.lock ./
-RUN yarn install
+COPY package.json ./
+RUN npm install
 COPY . .
-RUN yarn run build
+RUN npm run build
 
 
 # Stage 3: Final application image
