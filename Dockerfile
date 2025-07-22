@@ -4,7 +4,7 @@ FROM composer:2 as composer
 WORKDIR /app
 COPY database/ database/
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --no-interaction --no-plugins --no-scripts --prefer-dist
+RUN composer install --no-dev --no-interaction --prefer-dist
 
 
 # Stage 2: Frontend assets
