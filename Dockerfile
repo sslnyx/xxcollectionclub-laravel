@@ -52,6 +52,9 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 # Create a dummy .env file with an app key for the build process
 RUN echo "APP_KEY=base64:dummy_key_for_build_process_12345=" > .env
 
+# Copy composer binary
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
 # Run composer scripts as superuser
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer dump-autoload --optimize
 
