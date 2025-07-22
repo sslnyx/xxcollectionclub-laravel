@@ -49,19 +49,19 @@ COPY . /var/www/html
 # Set permissions first, so artisan can write to cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Create a dummy .env file with an app key for the build process
-RUN echo "APP_KEY=base64:dummy_key_for_build_process_12345=" > .env
+# Create a dummy .env file with an app key and URL for the build process
+RUN echo "APP_KEY=base64:dummy_key_for_build_process_12345=" > .env && \
+    echo "APP_URL=http://localhost" >> .env
 
 # Copy composer binary
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 # Ensure cache directory exists and clear cache
-RUN mkdir -p bootstrap/cache && \
-    php artisan cache:clear && \
-    php artisan config:clear
+RUN mkdir -p bootstrap/cache
 
 # Run composer scripts as superuser
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer dump-autoload --optimize
+
 
 
 # Copy Nginx and Supervisor configurations
