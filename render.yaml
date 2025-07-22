@@ -33,37 +33,6 @@ services:
           name: aimone-db
           property: password
 
-  - type: worker
-    name: aimone-be-worker
-    env: docker
-    plan: free
-    envVars:
-      - key: APP_KEY
-        generateValue: true
-      - key: DB_CONNECTION
-        value: pgsql
-      - fromGroup: aimone-be-secrets
-      - key: DB_HOST
-        fromDatabase:
-          name: aimone-db
-          property: host
-      - key: DB_PORT
-        fromDatabase:
-          name: aimone-db
-          property: port
-      - key: DB_DATABASE
-        fromDatabase:
-          name: aimone-db
-          property: database
-      - key: DB_USERNAME
-        fromDatabase:
-          name: aimone-db
-          property: user
-      - key: DB_PASSWORD
-        fromDatabase:
-          name: aimone-db
-          property: password
-
 databases:
   - name: aimone-db
     databaseName: aimone_db
