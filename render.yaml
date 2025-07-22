@@ -4,6 +4,7 @@ services:
     env: docker
     plan: free
     healthCheckPath: /
+    startCommand: "php artisan config:clear && php artisan migrate --force && /usr/bin/supervisord -c /etc/supervisord.conf"
     envVars:
       - key: APP_URL
         value: https://${RENDER_EXTERNAL_URL}
