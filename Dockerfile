@@ -49,12 +49,11 @@ COPY . /var/www/html
 # Copy composer binary
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-# Run composer scripts
-RUN composer dump-autoload --optimize
+# Set permissions first, so artisan can write to cache
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
-    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+# Run composer scripts as superuser
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer dump-autoload --optimize
 
 # Copy Nginx and Supervisor configurations
 # These files will be created in the next step
