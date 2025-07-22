@@ -3,7 +3,7 @@ FROM composer:2 as composer
 
 WORKDIR /app
 COPY database/ database/
-COPY composer.json composer.lock ./
+COPY composer.json ./
 RUN composer install --no-dev --no-interaction --prefer-dist
 
 
