@@ -4,7 +4,7 @@ FROM composer:2 as composer
 WORKDIR /app
 COPY database/ database/
 COPY composer.json ./
-RUN composer install --no-dev --no-interaction --prefer-dist --ignore-platform-reqs
+RUN composer install --no-dev --no-interaction --no-scripts --prefer-dist --ignore-platform-reqs
 
 
 # Stage 2: Frontend assets
@@ -45,6 +45,9 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
 COPY --from=composer /app/vendor /var/www/html/vendor
 COPY --from=node /app/public /var/www/html/public
 COPY . /var/www/html
+
+# Run composer scripts
+RUN composer dump-autoload --optimize
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
