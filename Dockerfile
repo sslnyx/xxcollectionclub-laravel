@@ -46,6 +46,9 @@ COPY --from=composer /app/vendor /var/www/html/vendor
 COPY --from=node /app/public /var/www/html/public
 COPY . /var/www/html
 
+# Create .env file for the build process so Laravel can load config
+RUN cp .env.example .env
+
 # Copy composer binary
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
