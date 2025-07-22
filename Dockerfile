@@ -13,7 +13,7 @@ WORKDIR /app
 COPY package.json ./
 RUN npm install
 COPY . .
-RUN npm run build
+RUN npm run prod
 
 
 # Stage 3: Final application image
