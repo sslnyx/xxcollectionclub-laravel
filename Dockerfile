@@ -60,7 +60,7 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN mkdir -p bootstrap/cache
 
 # Run composer scripts as superuser
-RUN COMPOSER_ALLOW_SUPERUSER=1 composer dump-autoload --optimize
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer dump-autoload --optimize --no-scripts
 
 
 
