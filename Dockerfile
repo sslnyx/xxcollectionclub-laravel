@@ -47,25 +47,25 @@ COPY --from=node /app/public /var/www/html/public
 COPY . /var/www/html
 
 # Set permissions first, so artisan can write to cache
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+RUN mkdir -p /var/www/html/storage/framework/cache \
+           /var/www/html/storage/framework/sessions \
+           /var/www/html/storage/framework/views \
+           /var/www/html/storage/logs \
+           /var/www/html/bootstrap/cache && \
+    chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
+    chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Create a dummy .env file with an app key and URL for the build process
 RUN echo "APP_KEY=base64:dummy_key_for_build_process_12345=" > .env && \
-    echo "APP_URL=http://localhost" >> .env
+    echo "APP_URL=http://localhost" >> .env && \
+    echo "APP_ENV=production" >> .env && \
+    echo "APP_DEBUG=false" >> .env
 
 # Copy composer binary
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-# Ensure cache directory exists and clear cache
-RUN mkdir -p bootstrap/cache
-
 # Run composer scripts as superuser
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer dump-autoload --optimize --no-scripts
-
-# Run database migrations
-RUN php artisan migrate --force
-
-
 
 # Copy Nginx and Supervisor configurations
 # These files will be created in the next step
