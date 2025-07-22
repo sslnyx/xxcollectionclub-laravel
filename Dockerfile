@@ -17,7 +17,7 @@ RUN npm run prod
 
 
 # Stage 3: Final application image
-FROM php:8.2-fpm-alpine
+FROM php:8.3-fpm-alpine
 
 WORKDIR /var/www/html
 
