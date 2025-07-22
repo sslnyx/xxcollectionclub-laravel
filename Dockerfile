@@ -37,7 +37,9 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     gd \
     zip \
     pdo \
-    pdo_pgsql     exif     pcntl
+    pdo_pgsql 
+    exif 
+    pcntl
 
 # Copy application code and dependencies
 COPY --from=composer /app/vendor /var/www/html/vendor
@@ -45,12 +47,12 @@ COPY --from=node /app/public /var/www/html/public
 COPY . /var/www/html
 
 # Set permissions first, so artisan can write to cache
-RUN mkdir -p /var/www/html/storage/framework/cache 
-           /var/www/html/storage/framework/sessions 
-           /var/www/html/storage/framework/views 
-           /var/www/html/storage/logs 
-           /var/www/html/bootstrap/cache && 
-    chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && 
+RUN mkdir -p /var/www/html/storage/framework/cache \
+           /var/www/html/storage/framework/sessions \
+           /var/www/html/storage/framework/views \
+           /var/www/html/storage/logs \
+           /var/www/html/bootstrap/cache && \
+    chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
     chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Create a dummy .env file with an app key and URL for the build process
