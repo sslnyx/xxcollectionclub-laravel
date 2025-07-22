@@ -2,45 +2,16 @@ services:
   - type: web
     name: aimone-be
     env: docker
+    plan: free
     healthCheckPath: /
     envVars:
       - key: APP_URL
-        fromRender: true
+        value: https://${RENDER_EXTERNAL_URL}
       - key: APP_KEY
         generateValue: true
       - key: DB_CONNECTION
         value: pgsql
       - fromGroup: aimone-be-secrets
-
-  - type: worker
-    name: aimone-be-worker
-    env: docker
-    startCommand: php /var/www/html/artisan queue:work --sleep=3 --tries=3 --max-time=3600
-    envVars:
-      - key: APP_KEY
-        generateValue: true
-      - key: DB_CONNECTION
-        value: pgsql
-      - fromGroup: aimone-be-secrets
-
-databases:
-  - name: aimone-db
-    databaseName: aimone_db
-    user: aimone_user
-
-envVarGroups:
-  - name: aimone-be-secrets
-    envVars:
-      - key: R2_ACCESS_KEY_ID
-        value: YOUR_R2_ACCESS_KEY_ID
-      - key: R2_SECRET_ACCESS_KEY
-        value: YOUR_R2_SECRET_ACCESS_KEY
-      - key: R2_BUCKET
-        value: YOUR_R2_BUCKET
-      - key: R2_ENDPOINT
-        value: YOUR_R2_ENDPOINT
-      - key: R2_URL
-        value: YOUR_R2_URL
       - key: DB_HOST
         fromDatabase:
           name: aimone-db
@@ -61,3 +32,54 @@ envVarGroups:
         fromDatabase:
           name: aimone-db
           property: password
+
+  - type: worker
+    name: aimone-be-worker
+    env: docker
+    plan: free
+    envVars:
+      - key: APP_KEY
+        generateValue: true
+      - key: DB_CONNECTION
+        value: pgsql
+      - fromGroup: aimone-be-secrets
+      - key: DB_HOST
+        fromDatabase:
+          name: aimone-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: aimone-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: aimone-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: aimone-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: aimone-db
+          property: password
+
+databases:
+  - name: aimone-db
+    databaseName: aimone_db
+    user: aimone_user
+    plan: free
+
+envVarGroups:
+  - name: aimone-be-secrets
+    envVars:
+      - key: R2_ACCESS_KEY_ID
+        value: YOUR_R2_ACCESS_KEY_ID
+      - key: R2_SECRET_ACCESS_KEY
+        value: YOUR_R2_SECRET_ACCESS_KEY
+      - key: R2_BUCKET
+        value: YOUR_R2_BUCKET
+      - key: R2_ENDPOINT
+        value: YOUR_R2_ENDPOINT
+      - key: R2_URL
+        value: YOUR_R2_URL
