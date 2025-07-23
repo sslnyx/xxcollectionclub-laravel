@@ -2,6 +2,14 @@
 
 echo "Running setup script..."
 
+# Print database environment variables for debugging
+echo "DB_CONNECTION: $DB_CONNECTION"
+echo "DB_HOST: $DB_HOST"
+echo "DB_PORT: $DB_PORT"
+echo "DB_DATABASE: $DB_DATABASE"
+echo "DB_USERNAME: $DB_USERNAME"
+echo "DB_PASSWORD: $DB_PASSWORD"
+
 # Wait for the database to be ready
 echo "Waiting for database to be ready..."
 /usr/bin/php /var/www/html/artisan migrate:status > /dev/null 2>&1
