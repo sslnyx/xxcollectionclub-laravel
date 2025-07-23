@@ -26,8 +26,10 @@ RUN apk add --no-cache \
     nginx     supervisor     curl     libzip-dev     libpng-dev     libjpeg-turbo-dev     freetype-dev     postgresql-dev     bash
 
 # Install PHP extensions
+# --- THIS SECTION HAS BEEN MODIFIED ---
+# Removed the "-j$(nproc)" flag to prevent memory exhaustion on build.
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) \
+    && docker-php-ext-install \
     gd \
     zip \
     pdo \
@@ -49,8 +51,6 @@ RUN mkdir -p /var/www/html/storage/framework/cache \
     chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
     chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-
-
 # Copy composer binary
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
@@ -58,13 +58,11 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer dump-autoload --optimize --no-scripts
 
 # Copy Nginx and Supervisor configurations
-# These files will be created in the next step
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY docker/supervisord.conf /etc/supervisord.conf
 
 # Expose port 80
 EXPOSE 80
 
-# Copy docker/setup.sh and make it executable
 # Entrypoint
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
