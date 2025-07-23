@@ -23,14 +23,7 @@ WORKDIR /var/www/html
 
 # Install system dependencies
 RUN apk add --no-cache \
-    nginx \
-    supervisor \
-    curl \
-    libzip-dev \
-    libpng-dev \
-    libjpeg-turbo-dev \
-    freetype-dev \
-    postgresql-dev
+    nginx     supervisor     curl     libzip-dev     libpng-dev     libjpeg-turbo-dev     freetype-dev     postgresql-dev     bash
 
 # Install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
