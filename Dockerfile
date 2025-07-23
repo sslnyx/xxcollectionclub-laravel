@@ -77,4 +77,4 @@ COPY docker/setup.sh /var/www/html/docker/setup.sh
 RUN chmod +x /var/www/html/docker/setup.sh
 
 # Entrypoint
-CMD ["/var/www/html/docker/setup.sh"]
+ENTRYPOINT ["/var/www/html/docker/setup.sh"]
