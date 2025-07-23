@@ -66,10 +66,5 @@ COPY docker/supervisord.conf /etc/supervisord.conf
 EXPOSE 80
 
 # Copy docker/setup.sh and make it executable
-COPY docker/setup.sh /usr/local/bin/setup.sh
-RUN chmod +x /usr/local/bin/setup.sh
-RUN ls -la /usr/local/bin/
-
-
 # Entrypoint
-ENTRYPOINT ["/usr/local/bin/setup.sh"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
