@@ -73,4 +73,8 @@ COPY docker/supervisord.conf /etc/supervisord.conf
 EXPOSE 80
 
 # Entrypoint
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+COPY docker/setup.sh /var/www/html/docker/setup.sh
+RUN chmod +x /var/www/html/docker/setup.sh
+
+# Entrypoint
+CMD ["/var/www/html/docker/setup.sh"]
