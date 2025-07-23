@@ -75,6 +75,8 @@ EXPOSE 80
 # Copy docker/setup.sh and make it executable
 COPY docker/setup.sh /usr/local/bin/setup.sh
 RUN chmod +x /usr/local/bin/setup.sh
+RUN ls -la /usr/local/bin/
+RUN /usr/local/bin/setup.sh -c "echo 'Dockerfile: setup.sh is executable!'"
 
 # Entrypoint
 ENTRYPOINT ["/usr/local/bin/setup.sh"]
