@@ -72,7 +72,7 @@ COPY docker/supervisord.conf /etc/supervisord.conf
 # Expose port 80
 EXPOSE 80
 
-# Entrypoint
+# Copy docker/setup.sh and make it executable
 COPY docker/setup.sh /var/www/html/docker/setup.sh
 RUN chmod +x /var/www/html/docker/setup.sh
 
