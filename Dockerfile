@@ -73,8 +73,8 @@ COPY docker/supervisord.conf /etc/supervisord.conf
 EXPOSE 80
 
 # Copy docker/setup.sh and make it executable
-COPY docker/setup.sh /var/www/html/docker/setup.sh
-RUN chmod +x /var/www/html/docker/setup.sh
+COPY docker/setup.sh /usr/local/bin/setup.sh
+RUN chmod +x /usr/local/bin/setup.sh
 
 # Entrypoint
-ENTRYPOINT ["/var/www/html/docker/setup.sh"]
+ENTRYPOINT ["/usr/local/bin/setup.sh"]
