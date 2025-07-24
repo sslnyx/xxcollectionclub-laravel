@@ -5,7 +5,7 @@ services:
     plan: free
     healthCheckPath: /
     startCommand: "/usr/bin/supervisord -c /etc/supervisord.conf"
-    buildCommand: "php artisan optimize:clear && php artisan config:clear && php artisan key:generate --force && php artisan voyager:install --with-dummy && ls -l database/migrations && php artisan migrate --force && php artisan db:seed --class=VoyagerDatabaseSeeder && php artisan storage:link"
+    buildCommand: "php artisan optimize:clear && php artisan config:clear && php artisan key:generate --force && ls -l database/migrations && php artisan migrate --force && php artisan storage:link"
     envVars:
       - key: APP_URL
         value: https://${RENDER_EXTERNAL_URL}

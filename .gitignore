@@ -19,3 +19,7 @@ yarn-error.log
 /storage/framework/testing/
 /storage/framework/views/
 /storage/logs/*.log
+
+# Database dumps
+aimone_dump.sql
+aimone_dump_pg.sql
