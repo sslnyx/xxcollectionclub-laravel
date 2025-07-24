@@ -11,8 +11,6 @@ services:
         value: https://${RENDER_EXTERNAL_URL}
       - key: APP_KEY
         generateValue: true
-      - key: PORT
-        value: 8080
       - key: DB_CONNECTION
         value: pgsql
       - fromGroup: aimone-be-secrets
