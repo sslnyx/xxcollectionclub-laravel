@@ -65,7 +65,7 @@ COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY docker/supervisord.conf /etc/supervisord.conf
 
 # Expose port 80
-EXPOSE 80
+EXPOSE 10000
 
 # Entrypoint
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
