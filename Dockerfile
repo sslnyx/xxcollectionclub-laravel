@@ -4,7 +4,7 @@ FROM composer:2 as composer
 WORKDIR /app
 COPY database/ database/
 COPY composer.json ./
-RUN composer install --no-dev --no-interaction --no-scripts --prefer-dist --ignore-platform-reqs
+RUN composer install --no-interaction --no-scripts --prefer-dist --ignore-platform-reqs
 
 
 # Stage 2: Frontend assets
@@ -49,7 +49,10 @@ RUN mkdir -p /var/www/html/storage/framework/cache \
            /var/www/html/storage/logs \
            /var/www/html/bootstrap/cache && \
     chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
-    chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+    chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache && \
+    chown -R www-data:www-data /var/www/html && \
+    find /var/www/html -type d -exec chmod 755 {} + && \
+    find /var/www/html -type f -exec chmod 644 {} +
 
 # Copy composer binary
 COPY --from=composer /usr/bin/composer /usr/bin/composer
